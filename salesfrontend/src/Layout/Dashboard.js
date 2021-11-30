@@ -23,7 +23,7 @@ function Dashboard(props) {
     };
 
     return (
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex"}}>
             <AppBar                 
                 position="fixed"
                 sx={{

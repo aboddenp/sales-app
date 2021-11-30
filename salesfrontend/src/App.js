@@ -5,6 +5,7 @@ import Dashboard from "./Layout/Dashboard"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Home from "./components/Home"
 import UserList from "./components/UserList";
+import SalesDetails from "./components/SalesDetails";
 
 export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -16,6 +17,7 @@ function MyApp() {
               <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/userlist" element={<UserList/>}/>
+                <Route path="/sales/:id" element={<SalesDetails/>}/>
               </Routes>
             </Dashboard>
           </Router>
