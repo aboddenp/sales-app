@@ -1,13 +1,14 @@
 from django.http.response import Http404
 from rest_framework.views import APIView
-from .models import User
-from .serializers import UserSerializer
+from .models import Product, User, SaleLog
+from .serializers import ProductSerializer, SaleLogSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponse
-# Create your views here.
+from rest_framework import generics
 
+# USER API
 class userList(APIView):
     """
 
@@ -50,3 +51,20 @@ class userDetail(APIView):
     def delete(self, request, pk, format=None):
         self.get_object(pk).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# PRODUCT API
+
+class ProductList(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+# SaleLog API
+class SaleLogList(generics.ListCreateAPIView):
+    queryset = SaleLog.objects.all()
+    serializer_class = SaleLogSerializer
+class SaleLogDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SaleLog.objects.all()
+    serializer_class = SaleLogSerializer

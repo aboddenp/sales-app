@@ -1,6 +1,34 @@
+from typing_extensions import Required
 from rest_framework import serializers
 from sales.models import Profile
 from django.contrib.auth.models import User
+
+from .models import Product,SaleLog
+
+def get_primary_key_related_model(model_class, **kwargs):
+    """
+    Nested serializers are a mess. https://stackoverflow.com/a/28016439/2689986
+    This lets us accept ids when saving / updating instead of nested objects.
+    Representation would be into an object (depending on model_class).
+    """
+    class PrimaryKeyNestedMixin(model_class):
+
+        def to_internal_value(self, data):
+            try:
+                return model_class.Meta.model.objects.get(pk=data)
+            except model_class.Meta.model.DoesNotExist:
+                self.fail('does_not_exist', pk_value=data)
+            except (TypeError, ValueError):
+                self.fail('incorrect_type', data_type=type(data).__name__)
+
+        def to_representation(self, data):
+            return model_class.to_representation(self, data)
+
+    return PrimaryKeyNestedMixin(**kwargs)
+
+
+
+#USER MODEL SERIALIZERS
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,7 +37,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(required=True)
-    profile = serializers.PrimaryKeyRelatedField()
     class Meta:
         model = User
         fields = ('first_name','last_name','username', 'profile', 'date_joined',)
@@ -33,3 +60,18 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
         return user
+
+# PRODUCT Serializers
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ("__all__")
+
+# Sale Log  Serializers
+class SaleLogSerializer(serializers.ModelSerializer):
+    user = get_primary_key_related_model(UserSerializer)
+    product = get_primary_key_related_model(ProductSerializer)
+    class Meta: 
+        model = SaleLog
+        fields= ('date','quantity','product','total','total_currency','user')
