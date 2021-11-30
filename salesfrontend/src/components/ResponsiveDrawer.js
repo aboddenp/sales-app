@@ -8,20 +8,31 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import HomeIcon from "@mui/icons-material/Home";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import {useNavigate} from "react-router-dom";
+
+function createData(name, location, icon) {
+    return { name, location, icon};
+  }
 
 function ResponsiveDrawer(props) {
-    const { mobileOpen,handleDrawerToggle,drawerWidth,window} = props;
+    const { mobileOpen, handleDrawerToggle, drawerWidth, window } = props;
+    let navigate = useNavigate();
+    const menuData = [
+        createData("HOME","/",<HomeIcon/>),
+        createData("USER LIST","/userlist",<ViewListIcon/>)
+    ];
+
     const drawer = (
         <div>
             <Toolbar />
             <Divider />
             <List>
-                {["HOME", "USER LIST"].map((text, index) => (
-                    <ListItem button key={text}>
+                {menuData.map((menuItem, index) => (
+                    <ListItem button key={menuItem.name} onClick={()=>navigate(menuItem.location)}>
                         <ListItemIcon>
-                            {index % 2 === 0 ? <HomeIcon /> : <ViewListIcon />}
+                            {menuItem.icon}
                         </ListItemIcon>
-                        <ListItemText primary={text} />
+                        <ListItemText primary={menuItem.name} />
                     </ListItem>
                 ))}
             </List>

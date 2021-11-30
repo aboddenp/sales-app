@@ -2,17 +2,23 @@ import * as React from "react";
 import {CssBaseline, Typography} from "@mui/material";
 import {ThemeProvider, createTheme } from "@mui/material/styles";
 import Dashboard from "./Layout/Dashboard"
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
+import Home from "./components/Home"
+import UserList from "./components/UserList";
 
 export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function MyApp() {
     return (
         <div>
-          <Dashboard>
-            <Typography>
-              Hello this is the main content
-            </Typography>
-          </Dashboard>
+          <Router>
+            <Dashboard>
+              <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/userlist" element={<UserList/>}/>
+              </Routes>
+            </Dashboard>
+          </Router>
         </div>
     );
 }
