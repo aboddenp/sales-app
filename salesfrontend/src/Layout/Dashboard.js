@@ -19,6 +19,7 @@ function Dashboard(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
+        console.log("what")
         setMobileOpen(!mobileOpen);
     };
 
@@ -68,7 +69,7 @@ function Dashboard(props) {
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
             >
-                <ResponsiveDrawer drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}/>
+                <ResponsiveDrawer mobileOpen={mobileOpen} drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}/>
             </Box>
             <Box
                 component="main"
