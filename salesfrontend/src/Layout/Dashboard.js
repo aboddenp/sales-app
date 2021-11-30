@@ -24,7 +24,8 @@ function Dashboard(props) {
 
     return (
         <Box sx={{ display: "flex" }}>
-            <AppBar                 position="fixed"
+            <AppBar                 
+                position="fixed"
                 sx={{
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
@@ -35,6 +36,7 @@ function Dashboard(props) {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
+                        sx={{ display: { sm: 'none' } }}
                         onClick={handleDrawerToggle}
                     >
                         <MenuIcon />

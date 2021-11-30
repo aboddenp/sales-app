@@ -1,5 +1,5 @@
 import * as React from "react";
-import {CssBaseline, Typography} from "@mui/material";
+import {CssBaseline} from "@mui/material";
 import {ThemeProvider, createTheme } from "@mui/material/styles";
 import Dashboard from "./Layout/Dashboard"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
