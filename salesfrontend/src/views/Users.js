@@ -18,11 +18,19 @@ function Users(props) {
         createUserData("Manuel", 12),
         createUserData("Dormon", 8),
         createUserData("Lalo", 4),
+        createUserData("Robert1", 25),
+        createUserData("Manu1el2", 12),
+        createUserData("Dormo1n3", 8),
+        createUserData("Lal1o4", 4),
+        createUserData("Robert13", 25),
+        createUserData("Manuel21", 12),
+        createUserData("Dormon11", 8),
+        createUserData("Lalo1", 4),
     ];
 
     return (
-        <Box sx={{ width: "100%" }}>
-            <Box sx={{ m: { xs: 2, lg: 8 } }}>
+        <Box sx={{ width: "100%",height:"80vh"}}>
+            <Box sx={{ m: { xs: 2, lg: 8 },height:"100%"}}>
                 <UserList users={users}/>
             </Box>
         </Box>

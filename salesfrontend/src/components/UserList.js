@@ -15,20 +15,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function UserList({ users }) {
     let navigate = useNavigate();
+    const gapSize = 20;
 
-    let Row = (index, style) => (
-        <Item
+    function Row({index, style}) {
+        return <Item
             sx={{
                 display: "flex",
+                px: 4,
                 ":hover": {
                     boxShadow: 6,
                 },
             }}
-            style={style}
-            key={users.username}
+            component="div"
+            style={{
+                ...style,
+                top: style.top + gapSize,
+                height: style.height - gapSize,
+            }}
+            key={users[index].username}
             onClick={() => navigate("/sales/" + users[index].username)}
         >
-            <h1>test</h1>
             <Box>
                 <Typography variant="h5">{index}</Typography>
             </Box>
@@ -39,22 +45,22 @@ function UserList({ users }) {
                 <Typography variant="h5">{users[index].saleCount}</Typography>
             </Box>
         </Item>
-    );
+    }
 
     return (
         <AutoSizer>
-            {({ height, width }) => (
-                <List
-                    className="List"
-                    height={height}
-                    itemCount={users.length}
-                    itemSize={50}
-                    width={width}
-                >
-                    {Row}
-                </List>
-            )}
-        </AutoSizer>
+        {({ height, width }) => (
+          <List
+            className="List"
+            height={height}
+            itemCount={users.length}
+            itemSize={100}
+            width={width}
+          >
+            {Row}
+          </List>
+        )}
+      </AutoSizer>
     );
 }
 

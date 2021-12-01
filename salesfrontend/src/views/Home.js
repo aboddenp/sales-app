@@ -35,8 +35,8 @@ function Home(props) {
     ];
 
     return (
-        <Box sx={{ width: "100%" }}>
-            <Box sx={{ m: { xs: 2, lg: 8 } }}>
+        <Box sx={{ width: "100%", height:"80vh" }}>
+            <Box sx={{ m: { xs: 2, lg: 8 } ,height:"55%" }}>
                 <UserList users={users}/>
             </Box>
             <Divider variant="middle" />
