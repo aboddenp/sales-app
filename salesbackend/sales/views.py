@@ -5,8 +5,23 @@ from .serializers import ProductSerializer, SaleLogSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import HttpResponse
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+
+from django.http import HttpResponse
+
+# ROOT API
+@api_view(['GET'])
+def api_root(request,format=None):
+    return Response(
+        {
+            'users':reverse('user-list',request=request,format=format),
+            'products':reverse('product-list',request=request,format=format),
+            'saleslogs':reverse('salelog-list',request=request,format=format),
+        }
+    )
+
 
 # USER API
 class userList(APIView):
@@ -63,8 +78,19 @@ class ProductDetail(generics.RetrieveUpdateDestroyAPIView):
 
 # SaleLog API
 class SaleLogList(generics.ListCreateAPIView):
-    queryset = SaleLog.objects.all()
     serializer_class = SaleLogSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned salelogs to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = SaleLog.objects.all()
+        username = self.request.query_params.get('username')
+        if username is not None:
+            queryset = queryset.filter(user__username=username)
+        return queryset
+
 class SaleLogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = SaleLog.objects.all()
     serializer_class = SaleLogSerializer
