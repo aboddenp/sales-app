@@ -3,9 +3,9 @@ import {CssBaseline} from "@mui/material";
 import {ThemeProvider, createTheme } from "@mui/material/styles";
 import Dashboard from "./Layout/Dashboard"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
-import Home from "./components/Home"
-import UserList from "./components/UserList";
-import SalesDetails from "./components/SalesDetails";
+import Home from "./views/Home"
+import Users from "./views/Users";
+import SalesDetails from "./views/SalesDetails";
 
 export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -16,7 +16,7 @@ function MyApp() {
             <Dashboard>
               <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/userlist" element={<UserList/>}/>
+                <Route path="/users" element={<Users/>}/>
                 <Route path="/sales/:id" element={<SalesDetails/>}/>
               </Routes>
             </Dashboard>

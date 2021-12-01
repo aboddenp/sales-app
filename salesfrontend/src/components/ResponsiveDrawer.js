@@ -19,7 +19,7 @@ function ResponsiveDrawer(props) {
     let navigate = useNavigate();
     const menuData = [
         createData("HOME","/",<HomeIcon/>),
-        createData("USER LIST","/userlist",<ViewListIcon/>)
+        createData("USER LIST","/users",<ViewListIcon/>)
     ];
 
     const drawer = (
