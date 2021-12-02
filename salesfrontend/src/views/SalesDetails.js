@@ -8,14 +8,14 @@ function createRow(id, product, quantity, sale, date) {
     return { id, product, quantity, sale, date };
 }
 
-function createColumn(field, type) {
+function createColumn(field, type, align="center") {
     return {
         field,
         type,
         headerName: field.toUpperCase(),
         headerAlign: "center",
         flex: 1,
-        align: "center",
+        align,
     };
 }
 
@@ -35,7 +35,7 @@ function SalesDetails(props) {
     }, [id]);
 
     const columns = [
-        createColumn("product"),
+        createColumn("product",undefined,"left"),
         createColumn("quantity", "number"),
         createColumn("sale", "number"),
         createColumn("date", "date"),
