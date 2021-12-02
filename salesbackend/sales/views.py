@@ -1,16 +1,18 @@
 from django.http.response import Http404
 from rest_framework.views import APIView
 from .models import Product, User, SaleLog
-from .serializers import ProductSerializer, SaleLogSerializer, UserSerializer
+from .serializers import DbSummarySerializer, ProductSerializer, SaleLogSerializer, UserSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
+from django.core.serializers.json import DjangoJSONEncoder
+import json
 
 from django.http import HttpResponse
-from django.db.models import Count
+from django.db.models import Count,Sum
 
 # ROOT API
 @api_view(['GET'])
@@ -20,9 +22,22 @@ def api_root(request,format=None):
             'users':reverse('user-list',request=request,format=format),
             'products':reverse('product-list',request=request,format=format),
             'saleslogs':reverse('salelog-list',request=request,format=format),
+            'apiSummary':reverse('db-summary',request=request,format=format),
         }
     )
 
+# ROOT API
+class dbSummary(APIView):
+
+    def get(self, request):
+        # Calculate aggregate values 
+        summaryData = {}
+        userCount = User.objects.aggregate(userCount = Count("id"))
+        productCount = Product.objects.aggregate(productCount = Count("id"))
+        saleCount = SaleLog.objects.aggregate(saleCount = Count("id"))
+        saleTotal = SaleLog.objects.aggregate(saleTotal = Sum('total'))
+        summaryData.update(**userCount,**productCount,**saleCount,**saleTotal)
+        return Response(DbSummarySerializer(summaryData).data)
 
 # USER API
 class userList(APIView):
@@ -34,7 +49,6 @@ class userList(APIView):
     def get(self,request,format=None):
         users = User.objects.all()
         salecount = self.request.query_params.get('salecount')
-        print(salecount)
         if salecount  is not None:
             users = users.annotate(sale_count=Count('salelog')).order_by("-sale_count")
         serializer = UserSerializer(users, many=True)
@@ -91,9 +105,9 @@ class SaleLogList(generics.ListCreateAPIView):
         by filtering against a `username` query parameter in the URL.
         """
         queryset = SaleLog.objects.all()
-        username = self.request.query_params.get('username')
-        if username is not None:
-            queryset = queryset.filter(user__username=username)
+        uid = self.request.query_params.get('uid')
+        if uid is not None:
+            queryset = queryset.filter(user__id=uid)
         return queryset
 
 class SaleLogDetail(generics.RetrieveUpdateDestroyAPIView):

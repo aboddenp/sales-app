@@ -38,10 +38,13 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(required=True)
     sale_count = serializers.IntegerField(required=False)
+    full_name = serializers.SerializerMethodField(required=False)
     class Meta:
         model = User
-        fields = ('id','first_name','last_name','username', 'profile', 'date_joined','sale_count')
+        fields = ('id','full_name','first_name','last_name','username', 'profile', 'date_joined','sale_count')
 
+    def get_full_name(self,user):
+        return user.first_name +" "+ user.last_name
 
     def create(self, validated_data):
 
@@ -65,15 +68,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 # PRODUCT Serializers
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ("__all__")
 
 # Sale Log  Serializers
-class SaleLogSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.HyperlinkedRelatedField(view_name='user-detail', read_only=True)
-    product = serializers.HyperlinkedRelatedField(view_name='product-detail', read_only=True)
+class SaleLogSerializer(serializers.ModelSerializer):
+    user = get_primary_key_related_model(UserSerializer)
+    product = get_primary_key_related_model(ProductSerializer)
     class Meta: 
         model = SaleLog
-        fields= ('date','quantity','product','total','total_currency','user')
+        fields= ('id','date','quantity','product','total','total_currency','user')
+
+class DbSummarySerializer(serializers.Serializer):
+   userCount= serializers.IntegerField()
+   saleCount= serializers.IntegerField()
+   productCount = serializers.IntegerField()
+   saleTotal = serializers.DecimalField(max_digits=14, decimal_places=2)

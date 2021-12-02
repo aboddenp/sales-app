@@ -5,6 +5,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('',views.api_root),
+    path('summary/',views.dbSummary.as_view(),name='db-summary'),
     path('users/', views.userList.as_view(), name='user-list'),
     path('users/<int:pk>/', views.userDetail.as_view(),name='user-detail'),
     path('products/',views.ProductList.as_view(), name='product-list'),
