@@ -5,6 +5,7 @@ import Dashboard from "./Layout/Dashboard"
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
 import Home from "./views/Home"
 import Users from "./views/Users";
+import NotFound from "./views/NotFound";
 import SalesDetails from "./views/SalesDetails";
 import Api from "./utils/api"
 
@@ -37,6 +38,7 @@ function MyApp() {
                 <Route path="/" element={<Home users={users} summary={summary}/>}/>
                 <Route path="/users" element={<Users users={users}/>}/>
                 <Route path="users/:id/sales/" element={<SalesDetails />}/>
+                <Route path="*" element={<NotFound/>}/>
               </Routes>
             </Dashboard>
           </Router>
