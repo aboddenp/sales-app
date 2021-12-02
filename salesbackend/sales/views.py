@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from django.http import HttpResponse
+from django.db.models import Count
 
 # ROOT API
 @api_view(['GET'])
@@ -32,6 +33,10 @@ class userList(APIView):
     """
     def get(self,request,format=None):
         users = User.objects.all()
+        salecount = self.request.query_params.get('salecount')
+        print(salecount)
+        if salecount  is not None:
+            users = users.annotate(sale_count=Count('salelog')).order_by("-sale_count")
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
@@ -94,3 +99,4 @@ class SaleLogList(generics.ListCreateAPIView):
 class SaleLogDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = SaleLog.objects.all()
     serializer_class = SaleLogSerializer
+

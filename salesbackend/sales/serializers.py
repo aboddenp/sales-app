@@ -37,9 +37,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(required=True)
+    sale_count = serializers.IntegerField(required=False)
     class Meta:
         model = User
-        fields = ('id','first_name','last_name','username', 'profile', 'date_joined',)
+        fields = ('id','first_name','last_name','username', 'profile', 'date_joined','sale_count')
+
 
     def create(self, validated_data):
 
@@ -72,8 +74,6 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 class SaleLogSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.HyperlinkedRelatedField(view_name='user-detail', read_only=True)
     product = serializers.HyperlinkedRelatedField(view_name='product-detail', read_only=True)
-    # user = get_primary_key_related_model(UserSerializer)
-    # product = get_primary_key_related_model(ProductSerializer)
     class Meta: 
         model = SaleLog
         fields= ('date','quantity','product','total','total_currency','user')

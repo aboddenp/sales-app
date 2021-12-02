@@ -25,3 +25,6 @@ class SaleLog(models.Model):
         product_price = self.product.price
         self.total  = (Money(self.quantity * product_price.amount,'USD')) 
         super(SaleLog, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f" {self.user.username} {self.product.name} {self.total}"
