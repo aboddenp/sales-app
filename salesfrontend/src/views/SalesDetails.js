@@ -46,7 +46,7 @@ function SalesDetails(props) {
             sale.id,
             sale.product.name,
             sale.quantity,
-            sale.total,
+            new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(sale.total),
             sale.date
         )
     );
@@ -68,7 +68,7 @@ function SalesDetails(props) {
                         <br />
                         Phone: {user?.profile?.phone}
                         <br />
-                        Sales: {user?.sale_total}
+                        Sales: { new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(user?.sale_total) }
                     </Typography>
                 </Box>
                 <Box>

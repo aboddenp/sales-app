@@ -17,7 +17,7 @@ function Home({users,summary}) {
     const stats = [
         createCardData(
             "totalSale",
-            "USD " + summary?.saleTotal
+            "USD " + new Intl.NumberFormat('en-IN').format(summary?.saleTotal)
         ),
         createCardData("totalProducts", summary?.productCount),
         createCardData("totalUsers", summary?.userCount),
