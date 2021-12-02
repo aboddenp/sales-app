@@ -28,15 +28,9 @@ function SalesDetails(props) {
         let api = new Api();
         api.getUserSales(id).then((response) => {
             setUserSales(response.data);
-            if(response.data.length === 0){
-                //  user has no sales fetch user details 
-                api.getUser(id).then((response)=>{
+            api.getUser(id).then((response)=>{
                     setUser(response.data)
-                })
-            }else {
-                // set user details from sales data 
-                setUser(response.data[0].user)
-            }
+            })
         });
     }, [id]);
 
@@ -74,7 +68,7 @@ function SalesDetails(props) {
                         <br />
                         Phone: {user?.profile?.phone}
                         <br />
-                        Sales: Todo
+                        Sales: {user?.sale_total}
                     </Typography>
                 </Box>
                 <Box>

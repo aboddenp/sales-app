@@ -38,10 +38,11 @@ class ProfileSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer(required=True)
     sale_count = serializers.IntegerField(required=False)
+    sale_total = serializers.DecimalField(max_digits=19,decimal_places=2,required=False)
     full_name = serializers.SerializerMethodField(required=False)
     class Meta:
         model = User
-        fields = ('id','full_name','first_name','last_name','username', 'profile', 'date_joined','sale_count')
+        fields = ('id','full_name','first_name','last_name','username', 'profile', 'date_joined','sale_count','sale_total')
 
     def get_full_name(self,user):
         return user.first_name +" "+ user.last_name

@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from django.core.serializers.json import DjangoJSONEncoder
 import json
+from djmoney.money import Money
 
 from django.http import HttpResponse
 from django.db.models import Count,Sum
@@ -50,7 +51,7 @@ class userList(APIView):
         users = User.objects.all()
         salecount = self.request.query_params.get('salecount')
         if salecount  is not None:
-            users = users.annotate(sale_count=Count('salelog')).order_by("-sale_count")
+            users = users.annotate(sale_count=Count('salelog'), sale_total=Sum('salelog__total')).order_by("-sale_count")
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
@@ -67,12 +68,13 @@ class userDetail(APIView):
     """
     def get_object(self, pk):
         try:
-            return User.objects.get(pk=pk)
+            return User.objects.annotate(sale_count=Count('salelog'), sale_total=Sum('salelog__total')).get(pk=pk)
         except User.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         serializer = UserSerializer(self.get_object(pk))
+        
         return Response(serializer.data)
     
     def put(self, request, pk, format=None):
