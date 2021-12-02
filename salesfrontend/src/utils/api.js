@@ -32,4 +32,17 @@ export default class Api {
     return this.init().get("/users?salecount=true");
   };
 
+  getUser = (id)=>{
+    return this.init().get(`/users/${id}`);
+  }
+
+  getSummary = () => {
+    return this.init().get("/summary/");
+  };
+
+  getUserSales = (id) => {
+    return this.init().get(`/salelogs?uid=${id}`);
+  };
+
+
 }

@@ -17,7 +17,9 @@ function UserList({ users }) {
     let navigate = useNavigate();
     const gapSize = 20;
 
+
     function Row({index, style}) {
+        let user = users[index]
         return <Item
             sx={{
                 display: "flex",
@@ -32,17 +34,17 @@ function UserList({ users }) {
                 top: style.top + gapSize,
                 height: style.height - gapSize,
             }}
-            key={users[index].username}
-            onClick={() => navigate("/sales/" + users[index].username)}
+            key={user.username}
+            onClick={() => navigate(`/users/${user.id}/sales`)}
         >
             <Box>
                 <Typography variant="h5">{index}</Typography>
             </Box>
             <Box sx={{ ml: 10 }}>
-                <Typography variant="h5">{users[index].username}</Typography>
+                <Typography variant="h5">{user.username}</Typography>
             </Box>
             <Box sx={{ ml: "auto", mr: 2 }}>
-                <Typography variant="h5">{users[index].saleCount}</Typography>
+                <Typography variant="h5">{user.sale_count}</Typography>
             </Box>
         </Item>
     }

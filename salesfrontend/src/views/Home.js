@@ -8,32 +8,25 @@ import Typography from "@mui/material/Typography";
 import UserList from "../components/UserList";
 
 
-
-function createUserData(username, saleCount) {
-    return { username, saleCount };
-}
-
 function createCardData(title, content) {
     return { title, content };
 }
 
-function Home(props) {
-
-    const users = props.topUsers.map((user)=> createUserData(user.username, user.sale_count))
+function Home({users,summary}) {
 
     const stats = [
         createCardData(
             "totalSale",
-            "USD " + parseFloat(Math.random() * 100000).toFixed(2)
+            "USD " + summary?.saleTotal
         ),
-        createCardData("totalProducts", Math.round(Math.random() * 100000)),
-        createCardData("totalUsers", Math.round(Math.random() * 100)),
+        createCardData("totalProducts", summary?.productCount),
+        createCardData("totalUsers", summary?.userCount),
     ];
 
     return (
         <Box sx={{ width: "100%", height:"80vh" }}>
             <Box sx={{ m: { xs: 2, lg: 8 } ,height:"55%" }}>
-                <UserList users={users}/>
+                <UserList users={users.slice(0,4)}/>
             </Box>
             <Divider variant="middle" />
             <Box sx={{ mt: 10 }}>

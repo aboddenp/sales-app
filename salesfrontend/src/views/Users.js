@@ -4,13 +4,7 @@ import UserList from "../components/UserList";
 
 
 
-function createUserData(username, saleCount) {
-    return { username, saleCount };
-}
-
-function Users(props) {
-
-    const users = props.users.map((user)=> createUserData(user.username, user.sale_count))
+function Users({users}) {
 
     return (
         <Box sx={{ width: "100%",height:"80vh"}}>

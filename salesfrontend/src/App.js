@@ -13,7 +13,8 @@ export const ColorModeContext = React.createContext({ toggleColorMode: () => {} 
 function MyApp() {
 
     const [users,setUsers] = React.useState([])
-    const [topUsers,setTopUsers] = React.useState([])
+    const [summary,setSummary] = React.useState()
+
     React.useEffect(()=>{
         const api = new Api();
         api.getUsers().then((response)=>{
@@ -22,18 +23,20 @@ function MyApp() {
     },[])
 
     React.useEffect(()=>{
-        setTopUsers(users.slice(0,4))
+        const api = new Api();
+        api.getSummary().then((response)=>{
+            setSummary(response.data)
+        })
     },[users])
-
 
     return (
         <div>
           <Router>
             <Dashboard>
               <Routes>
-                <Route path="/" element={<Home topUsers={topUsers}/>}/>
+                <Route path="/" element={<Home users={users} summary={summary}/>}/>
                 <Route path="/users" element={<Users users={users}/>}/>
-                <Route path="/sales/:id" element={<SalesDetails/>}/>
+                <Route path="users/:id/sales/" element={<SalesDetails />}/>
               </Routes>
             </Dashboard>
           </Router>
