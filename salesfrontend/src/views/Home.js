@@ -18,12 +18,8 @@ function createCardData(title, content) {
 }
 
 function Home(props) {
-    const users = [
-        createUserData("Hector", 25),
-        createUserData("Aster", 12),
-        createUserData("Jimmy", 8),
-        createUserData("Mario", 4),
-    ];
+
+    const users = props.topUsers.map((user)=> createUserData(user.username, user.sale_count))
 
     const stats = [
         createCardData(
