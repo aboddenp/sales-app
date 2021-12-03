@@ -31,6 +31,7 @@ function UserList({limit}) {
                 px: 4,
                 ":hover": {
                     boxShadow: 6,
+                    bgcolor:'action.hover'
                 },
             }}
             component="div"
