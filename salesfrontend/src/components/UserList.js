@@ -10,6 +10,7 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {useUsers} from "../ContextProviders/users"
 
+
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(3),
@@ -18,16 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function UserList({limit}) {
     let navigate = useNavigate();
-    const {users,loadUsers} = useUsers();
-    const [loading,setLoading]  = React.useState(true);
-
-    React.useEffect(() => {
-        loadUsers(()=>{
-            setLoading(false)
-        });
-    }, [loadUsers]);
-
-
+    const {users,loading} = useUsers();
     const gapSize = 20;
 
 

@@ -9,15 +9,17 @@ export function useUsers() {
 
 export default function UsersProvider({ children }) {
     const [users, setUsers] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
 
-    function loadUsers(callback) {
+    React.useEffect(() => {
         const api = new Api();
         api.getUsers().then((response) => {
             setUsers(response.data);
-            callback();
+            setLoading(false)
         });
-    }
-    let value = { users, loadUsers };
+    }, []);
+
+    let value = { users,loading};
 
     return (
         <UsersContext.Provider value={value}>{children}</UsersContext.Provider>
