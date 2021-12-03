@@ -5,14 +5,27 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
+import Skeleton from '@mui/material/Skeleton';
 import UserList from "../components/UserList";
+import Api from "../utils/api"
 
 
 function createCardData(title, content) {
     return { title, content };
 }
 
-function Home({summary}) {
+function Home() {
+    const [summary, setSummary] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const api = new Api();
+        api.getSummary().then((response) => {
+            setSummary(response.data);
+            setLoading(false)
+        });
+    }, []);
+
 
     const stats = [
         createCardData(
@@ -48,12 +61,12 @@ function Home({summary}) {
                                         color="text.secondary"
                                         gutterBottom
                                     >
-                                        {stat.title}
+                                        {loading ? <Skeleton />: stat.title}
                                     </Typography>
                                     <Typography
                                         sx={{ textAlign: "center", mt: 5 }}
                                     >
-                                        {stat.content}
+                                        {loading ? <Skeleton />: stat.content}
                                     </Typography>
                                 </CardContent>
                             </Card>
