@@ -24,7 +24,7 @@ function Home({summary}) {
     ];
 
     return (
-        <Box sx={{ width: "100%", height:"80vh" }}>
+        <Box sx={{ width: "100%", height:"80vh"}}>
             <Box sx={{ m: { xs: 2, lg: 8 } ,height:"55%" }}>
                 <UserList limit={5} />
             </Box>

@@ -57,11 +57,12 @@ function SalesDetails(props) {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
+                height:"100vh"
             }}
         >
             <Box>
                 <Box sx={{ alignSelf: "start", mt: 4, mb: 15 }}>
-                    <Typography sx={{ lineHeight: 2 }}>
+                    <Typography sx={{ lineHeight: 2, color:"text.primary" }}>
                         Name: {user?.full_name}
                         <br />
                         User Name: {user?.username}

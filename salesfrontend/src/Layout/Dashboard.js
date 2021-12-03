@@ -75,6 +75,8 @@ function Dashboard(props) {
                 sx={{
                     flexGrow: 1,
                     p: 3,
+                    bgcolor: 'background.paper',
+                    minHeight:'100vh',
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                 }}
             >

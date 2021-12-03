@@ -10,10 +10,10 @@ function NotFound(props) {
     return (
         <Box sx={{ width: "100%",height:"80vh"}}>
             <Box sx={{ m: { xs: 2, lg: 8 },height:"100%", textAlign:"center"}}>
-                <Typography variant="h1">
+                <Typography variant="h1" sx={{color:"text.primary"}}>
                     Page not found
                 </Typography>
-                <SentimentDissatisfiedSharpIcon sx={{ fontSize: "20rem"}}/>
+                <SentimentDissatisfiedSharpIcon sx={{ color:"warning.main", fontSize: "20rem"}}/>
             </Box>
         </Box>
     );
