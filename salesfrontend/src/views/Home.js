@@ -12,7 +12,7 @@ function createCardData(title, content) {
     return { title, content };
 }
 
-function Home({users,summary}) {
+function Home({summary}) {
 
     const stats = [
         createCardData(
@@ -26,7 +26,7 @@ function Home({users,summary}) {
     return (
         <Box sx={{ width: "100%", height:"80vh" }}>
             <Box sx={{ m: { xs: 2, lg: 8 } ,height:"55%" }}>
-                <UserList users={users.slice(0,4)}/>
+                <UserList limit={5} />
             </Box>
             <Divider variant="middle" />
             <Box sx={{ mt: 10 }}>

@@ -1,47 +1,50 @@
 import * as React from "react";
-import {CssBaseline} from "@mui/material";
-import {ThemeProvider, createTheme } from "@mui/material/styles";
-import Dashboard from "./Layout/Dashboard"
-import {BrowserRouter as Router,Routes,Route} from "react-router-dom"
-import Home from "./views/Home"
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import UsersProvider from "./ContextProviders/users"
+import Dashboard from "./Layout/Dashboard";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
 import Users from "./views/Users";
 import NotFound from "./views/NotFound";
 import SalesDetails from "./views/SalesDetails";
-import Api from "./utils/api"
+import Api from "./utils/api";
 
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = React.createContext({
+    toggleColorMode: () => {},
+});
 
 function MyApp() {
+    const [summary, setSummary] = React.useState();
 
-    const [users,setUsers] = React.useState([])
-    const [summary,setSummary] = React.useState()
-
-    React.useEffect(()=>{
+    React.useEffect(() => {
         const api = new Api();
-        api.getUsers().then((response)=>{
-            setUsers(response.data)
-        })
-    },[])
-
-    React.useEffect(()=>{
-        const api = new Api();
-        api.getSummary().then((response)=>{
-            setSummary(response.data)
-        })
-    },[users])
+        api.getSummary().then((response) => {
+            setSummary(response.data);
+        });
+    }, []);
 
     return (
         <div>
-          <Router>
-            <Dashboard>
-              <Routes>
-                <Route path="/" element={<Home users={users} summary={summary}/>}/>
-                <Route path="/users" element={<Users users={users}/>}/>
-                <Route path="users/:id/sales/" element={<SalesDetails />}/>
-                <Route path="*" element={<NotFound/>}/>
-              </Routes>
-            </Dashboard>
-          </Router>
+            <Router>
+                <Dashboard>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<Home summary={summary} />}
+                        />
+                        <Route
+                            path="/users"
+                            element={<Users/>}
+                        />
+                        <Route
+                            path="users/:id/sales/"
+                            element={<SalesDetails />}
+                        />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Dashboard>
+            </Router>
         </div>
     );
 }
@@ -73,7 +76,9 @@ export default function ToggleColorMode() {
         <ColorModeContext.Provider value={colorMode}>
             <CssBaseline />
             <ThemeProvider theme={theme}>
-                <MyApp />
+                <UsersProvider>
+                    <MyApp />
+                </UsersProvider>
             </ThemeProvider>
         </ColorModeContext.Provider>
     );

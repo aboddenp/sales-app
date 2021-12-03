@@ -19,7 +19,6 @@ function Dashboard(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
-        console.log("what")
         setMobileOpen(!mobileOpen);
     };
 
