@@ -51,7 +51,7 @@ function UserList({limit}) {
             onClick={() => navigate(`/users/${user.id}/sales`)}
         >
             <Box>
-                <Typography variant="h5">{index}</Typography>
+                <Typography variant="h5">{index+1}</Typography>
             </Box>
             <Box sx={{ ml: 10 }}>
                 <Typography variant="h5">{user.username}</Typography>
