@@ -57,7 +57,7 @@ function SalesDetails(props) {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
-                height:"100vh"
+                height:"80vh"
             }}
         >
             <Box>
