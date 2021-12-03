@@ -81,7 +81,7 @@ function UserList({limit}) {
     // component when data has not been loaded yet
     const componentSkeleton = (
         <Stack spacing={4} >
-            {Array(limit || 10).fill().map(()=><Skeleton variant="rectangular"  width={"100%"} height={50}/>)}
+            {Array(limit || 10).fill().map((v,i)=><Skeleton key={i} variant="rectangular"  width={"100%"} height={50}/>)}
         </Stack>
     )
 
