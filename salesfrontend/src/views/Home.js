@@ -5,10 +5,9 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import UserList from "../components/UserList";
-import Api from "../utils/api"
-
+import Api from "../utils/api";
 
 function createCardData(title, content) {
     return { title, content };
@@ -17,32 +16,38 @@ function createCardData(title, content) {
 function Home() {
     const [summary, setSummary] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
         const api = new Api();
-        api.getSummary().then((response) => {
-            setSummary(response.data);
-            setLoading(false)
-        });
+        api.getSummary().then(
+            (response) => {
+                setSummary(response.data);
+                setLoading(false);
+            },
+            (error) => {
+                setError(error);
+            }
+        );
     }, []);
-
 
     const stats = [
         createCardData(
             "totalSale",
-            "USD " + new Intl.NumberFormat('en-IN').format(summary?.saleTotal)
+            "USD " + new Intl.NumberFormat("en-IN").format(summary?.saleTotal)
         ),
         createCardData("totalProducts", summary?.productCount),
         createCardData("totalUsers", summary?.userCount),
     ];
 
     return (
-        <Box sx={{ width: "100%", height:"80vh"}}>
-            <Box sx={{ m: { xs: 2, lg: 8 } ,height:"65%" }}>
+        <Box sx={{ width: "100%", height: "80vh" }}>
+            <Box sx={{ m: { xs: 2, lg: 8 }, height: "65%" }}>
                 <UserList limit={5} />
             </Box>
             <Divider variant="middle" />
             <Box sx={{ mt: 10 }}>
+                {error && <Typography sx={{color:"error.main", ml:8, mb:4}}>Something went wrong fetching summary data</Typography>}
                 <Stack
                     spacing={2}
                     justifyContent="space-around"
@@ -61,12 +66,12 @@ function Home() {
                                         color="text.secondary"
                                         gutterBottom
                                     >
-                                        {loading ? <Skeleton />: stat.title}
+                                        {loading ? <Skeleton /> : stat.title}
                                     </Typography>
                                     <Typography
                                         sx={{ textAlign: "center", mt: 5 }}
                                     >
-                                        {loading ? <Skeleton />: stat.content}
+                                        {loading ? <Skeleton /> : stat.content}
                                     </Typography>
                                 </CardContent>
                             </Card>

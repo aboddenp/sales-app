@@ -19,7 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function UserList({limit}) {
     let navigate = useNavigate();
-    const {users,loading} = useUsers();
+    const {users,loading,error} = useUsers();
     const gapSize = 20;
 
 
@@ -74,11 +74,13 @@ function UserList({limit}) {
     // component when data has not been loaded yet
     const componentSkeleton = (
         <Stack spacing={4} >
+            {error && <Typography sx={{ color:"error.main"}}>Something went wrong fetching the user List</Typography>}
             {Array(limit || 10).fill().map((v,i)=><Skeleton key={i} variant="rectangular"  width={"100%"} height={50}/>)}
         </Stack>
     )
 
     return loading ? componentSkeleton : component;
 }
+
 
 export default UserList;

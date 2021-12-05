@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ function createColumn(field, type, align="center") {
 
 function SalesDetails(props) {
     let [userSales, setUserSales] = useState([]);
+    let [loading, setLoading] = useState(true);
     let [user,setUser] = useState();
     let { id } = useParams();
 
@@ -30,6 +31,7 @@ function SalesDetails(props) {
             setUserSales(response.data);
             api.getUser(id).then((response)=>{
                     setUser(response.data)
+                    setLoading(false)
             })
         });
     }, [id]);
@@ -51,6 +53,8 @@ function SalesDetails(props) {
         )
     );
 
+    const textSkeleton = <Skeleton width={45} sx ={{display:'inline-block'}}/>
+
     return (
         <Box
             sx={{
@@ -63,13 +67,13 @@ function SalesDetails(props) {
             <Box>
                 <Box sx={{ alignSelf: "start", mt: 4, mb: 15 }}>
                     <Typography sx={{ lineHeight: 2, color:"text.primary" }}>
-                        Name: {user?.full_name}
+                        Name: {loading? textSkeleton : user?.full_name }
                         <br />
-                        User Name: {user?.username}
+                        User Name: {loading? textSkeleton: user?.username }
                         <br />
-                        Phone: {user?.profile?.phone}
+                        Phone: {loading? textSkeleton : user?.profile?.phone}
                         <br />
-                        Sales: { new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(user?.sale_total) }
+                        Sales: {loading? textSkeleton : new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'USD' }).format(user?.sale_total) }
                     </Typography>
                 </Box>
                 <Box>

@@ -8,21 +8,14 @@ import Home from "./views/Home";
 import Users from "./views/Users";
 import NotFound from "./views/NotFound";
 import SalesDetails from "./views/SalesDetails";
-import Api from "./utils/api";
+import ErrorBoundary from "./utils/errorHandler";
+
 
 export const ColorModeContext = React.createContext({
     toggleColorMode: () => {},
 });
 
 function MyApp() {
-    const [summary, setSummary] = React.useState();
-
-    React.useEffect(() => {
-        const api = new Api();
-        api.getSummary().then((response) => {
-            setSummary(response.data);
-        });
-    }, []);
 
     return (
         <div>
@@ -31,7 +24,7 @@ function MyApp() {
                     <Routes>
                         <Route
                             path="/"
-                            element={<Home summary={summary} />}
+                            element={<Home />}
                         />
                         <Route
                             path="/users"
@@ -77,7 +70,9 @@ export default function ToggleColorMode() {
             <CssBaseline />
             <ThemeProvider theme={theme}>
                 <UsersProvider>
-                    <MyApp />
+                    <ErrorBoundary>
+                     <MyApp />
+                    </ErrorBoundary>
                 </UsersProvider>
             </ThemeProvider>
         </ColorModeContext.Provider>
