@@ -9,6 +9,8 @@ services:
   backend:
     build: ./salesbackend
     container_name: salesapp_backend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     env_file: ./salesbackend/.env
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -20,6 +22,8 @@ services:
   frontend:
     build: ./salesfrontend
     container_name: salesapp_frontend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
     env_file: ./salesfrontend/.env
     command: npm start
     volumes:
@@ -28,4 +32,13 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-
+  test:
+      container_name: sales-frontend-test
+      build:
+        context: ./salesfrontend
+        dockerfile: Dockerfile
+      volumes:
+        - ./salesfrontend:/app
+      environment:
+        - CI=true
+      command: npm test
