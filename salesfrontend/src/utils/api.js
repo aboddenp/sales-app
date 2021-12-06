@@ -29,7 +29,7 @@ export default class Api {
   };
 
   getUsers = () => {
-    return this.init().get("/users?salecount=true");
+    return this.init().get("/users/");
   };
 
   getUser = (id)=>{

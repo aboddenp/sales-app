@@ -18,7 +18,7 @@ class SaleLog(models.Model):
     date = models.DateField(auto_now=True)
     quantity = models.IntegerField()
     product = models.ForeignKey(Product,null=True, on_delete=SET_NULL)
-    user = models.ForeignKey(User, on_delete=CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     total = MoneyField(max_digits=14, decimal_places=2, default_currency='USD', default=Money(0,'USD'))
     
     def save(self,*args, **kwargs):
