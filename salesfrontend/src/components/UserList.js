@@ -21,6 +21,12 @@ function UserList({limit}) {
     let navigate = useNavigate();
     const {users,loading,error} = useUsers();
     const gapSize = 20;
+    
+    // check that the number of users to show is not greater than users in data
+    let limitAdjust = limit || users.length
+    if(users.length < limitAdjust){
+        limitAdjust = users.length
+    }
 
 
     function Row({index, style}) {
@@ -61,7 +67,7 @@ function UserList({limit}) {
           <List
             className="List"
             height={height}
-            itemCount={limit || users.length}
+            itemCount={limitAdjust}
             itemSize={100}
             width={width}
           >
