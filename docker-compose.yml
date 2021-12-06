@@ -32,13 +32,13 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-  test:
-      container_name: sales-frontend-test
-      build:
-        context: ./salesfrontend
-        dockerfile: Dockerfile
-      volumes:
-        - ./salesfrontend:/app
-      environment:
-        - CI=true
-      command: npm test
+  # test:
+  #     container_name: sales-frontend-test
+  #     build:
+  #       context: ./salesfrontend
+  #       dockerfile: Dockerfile
+  #     volumes:
+  #       - ./salesfrontend:/app
+  #     environment:
+  #       - CI=true
+  #     command: npm test
