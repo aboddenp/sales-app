@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'salesbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'saleslmt',
-        'USER': 'salessuper',
-        'PASSWORD': 'Nw&~%D)w.k!*rT45',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': str(os.getenv('POSTGRES_NAME')),
+        'USER': str(os.getenv('POSTGRES_USER')),
+        'PASSWORD': str(os.getenv('POSTGRES_PASSWORD')),
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 

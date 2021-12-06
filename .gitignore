@@ -88,3 +88,6 @@ local_settings.py
 salesEnv/
 .env
 db.sqlite3
+
+### Docker Volume ###
+data/

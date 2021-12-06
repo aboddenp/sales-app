@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    container_name: salesapp_db
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+  backend:
+    build: ./salesbackend
+    container_name: salesapp_backend
+    env_file: ./salesbackend/.env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./salesbackend:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  frontend:
+    build: ./salesfrontend
+    container_name: salesapp_frontend
+    env_file: ./salesfrontend/.env
+    command: npm start
+    volumes:
+      - ./salesfrontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
