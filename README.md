@@ -22,7 +22,7 @@ Rename the *.env-sample* in sales-app/salesbackend and *.env-sample* in sales-ap
     
 
     docker-compose up -d
-    
+      
 Apply the django migrations with the following command 
 
      docker-compose run backend python3 manage.py migrate 
@@ -33,7 +33,6 @@ The  docker-compose command will pull the images from Docker Hub and then link t
     
 Interact with the backend in the browser [localhost:8000](http://localhost:8000/) and the frontend in [localhost:3000](http://localhost:3000/)
 
-** note: Give the docker container a couple minutes to run the frontend it takes some time for the development server to start**
 
 ## How to POST
 
@@ -73,6 +72,9 @@ product corresponds to the **id** of the product assigned to this sale
 
    [postman json link](https://www.getpostman.com/collections/2d61af62d57744e25257)
    
+## Notes
+
+backend will start until database is ready to accept connections ```Creating salesapp_db ... done``` will run for a bit before ```Creating salesapp_backend ... done``` runs      note: Give the docker container a couple minutes to run the frontend it takes some time for the development server to start**
 # Screenshots 
 ![image](https://user-images.githubusercontent.com/43423531/144917341-5d58a358-aad5-48e9-aedb-0a16c064e04d.png)
 
