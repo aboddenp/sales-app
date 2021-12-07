@@ -9,6 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import {useUsers} from "../ContextProviders/users"
+import emptyGif from "../img/empty.gif"
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -61,13 +62,13 @@ function UserList({limit}) {
         </Item>
     }
 
-    const component = (
+    let component = (
         <AutoSizer>
         {({ height, width }) => (
           <List
             className="List"
             height={height}
-            itemCount={limitAdjust}
+            itemCount={limitAdjust}c
             itemSize={100}
             width={width}
           >
@@ -84,6 +85,14 @@ function UserList({limit}) {
             {Array(limit || 10).fill().map((v,i)=><Skeleton key={i} variant="rectangular"  width={"100%"} height={50}/>)}
         </Stack>
     )
+
+    // component when list is empty 
+    if(users.length === 0 ){
+        component = <>
+            <Typography sx={{ color:"warning.main"}}>0 users in database, please create new users and refresh page.</Typography>
+            <img style={{width:"400px"}} src={emptyGif} alt="empty database" />
+        </>
+    }
 
     return loading ? componentSkeleton : component;
 }
