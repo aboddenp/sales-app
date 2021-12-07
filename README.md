@@ -33,6 +33,42 @@ The  docker-compose command will pull the images from Docker Hub and then link t
     
 Interact with the backend in the browser [localhost:8000](http://localhost:8000/) and the frontend in [localhost:3000](http://localhost:3000/)
 
+** note: Give the docker container a couple minutes to run the frontend it takes some time for the development server to start**
+
+## How to POST
+
+### create a new user 
+```JSON
+{
+    "first_name":"John",
+    "last_name":"Doe",
+    "username":"JohnDoe123",
+    "profile": {
+        "phone":"2405659334"
+    }
+}
+```
+
+### create a new product
+```JSON
+{
+    "name":"battery-pack",
+    "description":"used to charge items",
+    "price":"4.99"
+}
+```
+
+### create a new sale
+user corresponds to the **id** of the user assigned to this sale    
+product corresponds to the **id** of the product assigned to this sale
+```JSON
+{
+    "quantity":1,
+    "user": 1, 
+    "product":1
+}
+```
+
 ## POSTMAN Example 
 
    [postman json link](https://www.getpostman.com/collections/2d61af62d57744e25257)
