@@ -75,6 +75,13 @@ product corresponds to the **id** of the product assigned to this sale
 ## Notes
 
 backend will start until database is ready to accept connections ```Creating salesapp_db ... done``` will run for a bit before ```Creating salesapp_backend ... done``` runs      note: Give the docker container a couple minutes to run the frontend it takes some time for the development server to start**
+
+### Problems? 
+If the frontend cannot connect to db please remember to run this command after the containers are running 
+```CMD
+docker-compose run backend python3 manage.py migrate 
+```
+
 # Screenshots 
 ![image](https://user-images.githubusercontent.com/43423531/144917341-5d58a358-aad5-48e9-aedb-0a16c064e04d.png)
 
