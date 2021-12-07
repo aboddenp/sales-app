@@ -33,6 +33,8 @@ The  docker-compose command will pull the images from Docker Hub and then link t
     
 Interact with the backend in the browser [localhost:8000](http://localhost:8000/) and the frontend in [localhost:3000](http://localhost:3000/)
 
+** note: Give the docker container a couple minutes to run the frontend it takes some time for the development server to start**
+
 ## How to POST
 
 ### create a new user 
