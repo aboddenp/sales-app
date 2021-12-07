@@ -6,6 +6,11 @@ services:
     container_name: salesapp_db
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - djangonetwork 
   backend:
     build: ./salesbackend
     container_name: salesapp_backend
@@ -17,28 +22,26 @@ services:
       - ./salesbackend:/code
     ports:
       - "8000:8000"
+    networks:
+      - djangonetwork 
     depends_on:
       - db
   frontend:
     build: ./salesfrontend
     container_name: salesapp_frontend
-    environment:
-      CHOKIDAR_USEPOLLING: "true"
+    # environment:
+    #   CHOKIDAR_USEPOLLING: "true"
     env_file: ./salesfrontend/.env
-    command: npm start
-    volumes:
-      - ./salesfrontend:/app
+    command: npm run start
+    # volumes:
+    #   - ./salesfrontend:/app
     ports:
       - "3000:3000"
+    networks:
+      - djangonetwork 
     depends_on:
       - backend
-  # test:
-  #     container_name: sales-frontend-test
-  #     build:
-  #       context: ./salesfrontend
-  #       dockerfile: Dockerfile
-  #     volumes:
-  #       - ./salesfrontend:/app
-  #     environment:
-  #       - CI=true
-  #     command: npm test
+
+networks:
+    djangonetwork:
+        driver: bridge
