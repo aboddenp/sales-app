@@ -10,7 +10,12 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     networks:
-      - djangonetwork 
+      - djangonetwork
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20 
   backend:
     build: ./salesbackend
     container_name: salesapp_backend
@@ -25,7 +30,8 @@ services:
     networks:
       - djangonetwork 
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   frontend:
     build: ./salesfrontend
     container_name: salesapp_frontend
